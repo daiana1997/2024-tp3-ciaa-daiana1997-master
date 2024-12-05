@@ -13,14 +13,14 @@
 #include "semphr.h"
 
 
-#define mainMAX_MSG_LEN 25
+#define BUFFER 25
 
 int main( void )
 {
-		char cMessage[ mainMAX_MSG_LEN ];
+		char mensaje[ BUFFER ];
 		int messageIndex;
 		uint8_t receivedByte;
-		bool_t input;
+		bool_t entrada;
 
         uartConfig( UART_USB, 9600);
 
@@ -29,17 +29,17 @@ int main( void )
 
         while (TRUE) {
 
-                	input = uartReadByte( UART_USB, &receivedByte);
-                	if (input == FALSE)
+                	entrada = uartReadByte( UART_USB, &receivedByte);
+                	if (entrada == FALSE)
                 		continue;
 
-                	cMessage[messageIndex++] = receivedByte;
+                	mensaje[messageIndex++] = receivedByte;
                 	if (receivedByte == '\r') {
-                		cMessage[messageIndex++] = '\0\n';
-                		uartWriteString(UART_USB, cMessage);
+                		mensaje[messageIndex++] = '\0\n';
+                		uartWriteString(UART_USB, mensaje);
                 		messageIndex = 0;
                 		for (int i = 0; i < 25; i++) {
-                			cMessage[i] = 0;
+                			mensaje[i] = 0;
                 		}
                 	}
 

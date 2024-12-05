@@ -35,7 +35,7 @@ void task ()
 {
 
 	TickType_t pxPreviousWakeTime = 0;
-	int period = 200;
+	int period = 500;
 	  int valorLed;
 	  for(;;) {
 
@@ -43,10 +43,15 @@ void task ()
 
 	        	if (gpioRead(botones[i]) == 0) {
 	        		gpioToggle(led[i]);
+	        		if (gpioRead(botones[i]) == 1) {
+	        			gpioToggle(led[i]);
+	        		}
 	        	}
 
 	        	valorLed = gpioRead(botones[i]);
+
 	          }
+
 
 	  vTaskDelayUntil( &pxPreviousWakeTime, period );
 	  }
